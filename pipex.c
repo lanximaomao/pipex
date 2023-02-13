@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/13 23:19:38 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/14 00:53:11 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,7 @@
 //inplement > and <
 
 #include "pipex.h"
-#include <errno.h>
-#include <unistd.h>
-#include <string.h>
-#include <fcntl.h>
-#include <sys/wait.h>
+
 
 typedef struct s_pipex
 {
@@ -43,8 +39,7 @@ typedef struct s_pipex
 	char* cmd2;
 	char** cmd1_args;
 	char** cmd2_args;
-	char* infile;
-	char* outfile;
+	int fd[2];
 } t_pipex;
 
 
@@ -87,8 +82,22 @@ void free_char(char** str)
 	while (str[i])
 	{
 		free(str[i]);
+		i++;
 	}
 	free(str);
+}
+
+int close_all(t_pipex *pipex, int fd1, int fd2)
+{
+	if (fd1 > 0)
+		close(fd1);
+	if (fd2 > 0)
+		close(fd2);
+	if (pipex->fd[0] > 0)
+		close(pipex->fd[0]);
+	if (pipex->fd[1] > 0)
+		close(pipex->fd[1]);
+	return(0);
 }
 
 int get_pipe (t_pipex *pipex)
@@ -117,9 +126,9 @@ int get_pipe (t_pipex *pipex)
 			ft_printf("cannot join this string.\n");
 			return (1);
 		}
+		dup2(pipex->fd[0], 0);//read from infile
 		dup2(fd[1], 1);
-		close(fd[0]);
-		close(fd[1]);
+		close_all(pipex, fd[0], fd[1]);
 		if (execve(cmd_path, pipex->cmd1_args, NULL) == -1)
 		{
 			perror("execve cmd1");
@@ -135,8 +144,8 @@ int get_pipe (t_pipex *pipex)
 		if (!cmd_path)
 			return(1);
 		dup2(fd[0], 0);
-		close(fd[0]);
-		close(fd[1]);
+		dup2(pipex->fd[1],1);
+		close_all(pipex, fd[0], fd[1]);
 		if (execve(cmd_path, pipex->cmd2_args, NULL) == -1)
 		{
 			perror("execve cmd2");
@@ -144,15 +153,12 @@ int get_pipe (t_pipex *pipex)
 		}
 	}
 	wait(NULL);
-	close(fd[0]);
-	close(fd[1]);
+	close_all(pipex, fd[0], fd[1]);
 	return(0);
 }
 
 int pipex_init(t_pipex *pipex, char** argv)
 {
-	pipex->infile = argv[1];
-	pipex->outfile = argv[4];
 	pipex->cmd1_args = ft_split(argv[2], ' ');
 	if (!pipex->cmd1_args)
 		exit(1);
@@ -165,6 +171,10 @@ int pipex_init(t_pipex *pipex, char** argv)
 	//ft_printf("cmd1 arg is: %s\n", pipex->cmd1_args[1]);
 	//ft_printf("cmd2 is: %s\n", pipex->cmd2);
 	//ft_printf("cmd2 arg is: %s\n", pipex->cmd2_args[1]);
+	pipex->fd[0] = open(argv[1], O_RDONLY, S_IRWXU);
+	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT, S_IRWXU);
+	if (pipex->fd[0] == -1 || pipex->fd[1] == -1)
+		exit(1);
 	return(0);
 }
 
@@ -175,9 +185,11 @@ void free_all(t_pipex *pipex)
 	free(pipex);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char** argv, char** env)
 {
 	t_pipex *pipex;
+
+	ft_printf("env: %s\n", env[0]);
 
 	if (argc != 5)
 		exit(1);
@@ -186,7 +198,7 @@ int main(int argc, char** argv)
 		exit(1);
 	if (get_pipe(pipex) == 1)
 		exit(1);
-	//free_all(pipex);
+	free_all(pipex);
 	return (0);
 }
 

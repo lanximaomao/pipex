@@ -1,16 +1,7 @@
-void ft_which()
-{
-	char cmd[] = "/usr/bin/which";
-	char *argVec[] = {"which", "ls", NULL};
-	char *envVec[] = {NULL};
-	if (execve(cmd, argVec, envVec) == -1)
-	{
-		perror("execve");
-		exit(errno);
-	}
-}
 
 //from chatGPT
+
+#include "pipex.h"
 
 void ft_which()
 {
@@ -58,4 +49,10 @@ void ft_which()
         close(fd[0]); // Close read end
         wait(NULL);
     }
+}
+
+int main()
+{
+	ft_which();
+	return(0);
 }
