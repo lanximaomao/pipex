@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/13 15:09:42 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/13 15:57:12 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 /*
 ** ./pipex file1 cmd1 cmd2 cmd3 ... cmdn file2
+** ./pipex infile "ls -l" "cat pipex.c" "grep 3 " outfile
 */
 
 // /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
@@ -33,26 +34,14 @@
 #include <unistd.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/wait.h>
 
 void find_my_path ()
 {
-	char *args[] = {"which", "ls", NULL};
-	execve("/usr/bin/which", args, NULL);
-	perror("error message");
+	return;
 }
 
-void ft_ls()
-{
-	char cmd[] = "/bin/ls";
-	char *argVec[] = {"ls", "-l", NULL};
-	char *envVec[] = {NULL};
-	if (execve(cmd, argVec, envVec) == -1)
-	{
-		perror("execve");
-		exit(errno);
-	}
 
-}
 
 void get_cmd(char ** cmd_wth_arg)
 {
@@ -68,10 +57,10 @@ void get_cmd(char ** cmd_wth_arg)
 	close(fd);
 }
 
-void ft_which()
+void ft_ls()
 {
-	char cmd[] = "/usr/bin/which";
-	char *argVec[] = {"which", "ls", NULL};
+	char cmd[] = "/bin/ls";
+	char *argVec[] = {"ls", "-l", NULL};
 	char *envVec[] = {NULL};
 	if (execve(cmd, argVec, envVec) == -1)
 	{
@@ -79,6 +68,69 @@ void ft_which()
 		exit(errno);
 	}
 }
+
+//void ft_which()
+//{
+//	char cmd[] = "/usr/bin/which";
+//	char *argVec[] = {"which", "ls", NULL};
+//	char *envVec[] = {NULL};
+//	if (execve(cmd, argVec, envVec) == -1)
+//	{
+//		perror("execve");
+//		exit(errno);
+//	}
+//}
+
+//from chatGPT
+
+void ft_which()
+{
+    char cmd[] = "/usr/bin/which";
+    char *argVec[] = {"which", "ls", NULL};
+    char *envVec[] = {NULL};
+    int fd[2];
+
+    if (pipe(fd) == -1) {
+        perror("pipe");
+        exit(EXIT_FAILURE);
+    }
+
+    int pid = fork();
+
+    if (pid == -1) {
+        perror("fork");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid == 0) { // Child process
+        close(fd[0]); // Close read end
+        dup2(fd[1], STDOUT_FILENO); // Redirect stdout to pipe
+        close(fd[1]); // Close write end
+        if (execve(cmd, argVec, envVec) == -1)
+        {
+            perror("execve");
+            exit(errno);
+        }
+    }
+    else { // Parent process
+        close(fd[1]); // Close write end
+        char buf[1024];
+        int numRead = 0;
+
+        while ((numRead = read(fd[0], buf, sizeof(buf))) > 0) {
+            write(STDOUT_FILENO, buf, numRead);
+        }
+
+        if (numRead == -1) {
+            perror("read");
+            exit(EXIT_FAILURE);
+        }
+
+        close(fd[0]); // Close read end
+        wait(NULL);
+    }
+}
+
 
 int main(int argc, char** argv)
 {
@@ -105,12 +157,12 @@ int main(int argc, char** argv)
 		//ft_printf("cmd %d is %s:\n", i, input[i]);
 		cmd_with_arg = ft_split(input[i], ' ');
 		//remember to free inside a loop
-		ft_printf("my command:  %s\n", cmd_with_arg[0]);
-		ft_printf("my command arguments: %s\n", cmd_with_arg[1]);
+		//ft_printf("my command:  %s\n", cmd_with_arg[0]);
+		//ft_printf("my command arguments: %s\n", cmd_with_arg[1]);
 		//function call
 		//ft_ls();
-		//ft_which();
-		get_cmd(cmd_with_arg);
+		ft_which();
+		//get_cmd(cmd_with_arg);
 		//find_my_path();
 		i++;
 	}

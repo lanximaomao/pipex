@@ -1,9 +1,9 @@
 total 72
 -rw-r--r--   1 lsun  2020   1167 Feb 13 13:55 Makefile
 -rw-r--r--   1 lsun  2020     17 Feb  1 18:17 README.md
--rw-r--r--   1 lsun  2020     42 Feb  6 11:53 file1
--rw-r--r--   1 lsun  2020      0 Feb 13 15:10 infile
-drwxr-xr-x  68 lsun  2020   2312 Feb 13 15:10 libft
--rwxr-xr-x   1 lsun  2020  14020 Feb 13 15:10 pipex
--rw-r--r--   1 lsun  2020   2914 Feb 13 15:09 pipex.c
+-rw-r--r--   1 lsun  2020    437 Feb 13 15:31 infile
+drwxr-xr-x  68 lsun  2020   2312 Feb 13 15:31 libft
+-rwxr-xr-x   1 lsun  2020  14020 Feb 13 15:31 pipex
+-rw-r--r--   1 lsun  2020   2914 Feb 13 15:31 pipex.c
 -rw-r--r--   1 lsun  2020   1108 Feb 13 10:52 pipex.h
+w-r--r--   1 lsun  2020   1108 Feb 13 10:52 pipex.h
