@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/13 21:02:51 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/13 23:19:38 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 // /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
 
 //inplement the perror, stdrr;
+//inplement > and <
 
 #include "pipex.h"
 #include <errno.h>
