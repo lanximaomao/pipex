@@ -1,9 +1,10 @@
-total 72
--rw-r--r--   1 lsun  2020   1167 Feb 13 13:55 Makefile
--rw-r--r--   1 lsun  2020     17 Feb  1 18:17 README.md
--rw-r--r--   1 lsun  2020    437 Feb 13 15:31 infile
-drwxr-xr-x  68 lsun  2020   2312 Feb 13 15:31 libft
--rwxr-xr-x   1 lsun  2020  14020 Feb 13 15:31 pipex
--rw-r--r--   1 lsun  2020   2914 Feb 13 15:31 pipex.c
--rw-r--r--   1 lsun  2020   1108 Feb 13 10:52 pipex.h
-w-r--r--   1 lsun  2020   1108 Feb 13 10:52 pipex.h
+total 104
+-rw-r--r--   1 linlinsun  staff   1167 Feb 13 19:09 Makefile
+-rw-r--r--   1 linlinsun  staff     17 Feb 11 15:02 README.md
+-rwxr-xr-x   1 linlinsun  staff   8620 Feb 12 23:46 a.out
+-rw-r--r--   1 linlinsun  staff   1066 Feb 13 19:51 ft_which.c
+-rw-r--r--   1 linlinsun  staff    548 Feb 13 20:02 infile
+drwxr-xr-x  66 linlinsun  staff   2112 Feb 13 20:02 libft
+-rwxr-xr-x   1 linlinsun  staff  13988 Feb 13 20:02 pipex
+-rw-r--r--   1 linlinsun  staff   2905 Feb 13 20:02 pipex.c
+-rw-r--r--   1 linlinsun  staff   1108 Feb 13 19:09 pipex.h
