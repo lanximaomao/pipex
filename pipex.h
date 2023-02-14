@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:01:44 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 00:31:31 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/14 17:24:26 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,16 @@
 
 # include <stdio.h>
 # include <stdlib.h>
+
+typedef struct s_pipex
+{
+	char* cmd1;
+	char* cmd2;
+	char* cmd1_path;
+	char* cmd2_path;
+	char** cmd1_args;
+	char** cmd2_args;
+	int fd[2];
+} t_pipex;
 
 #endif
