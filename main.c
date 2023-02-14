@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:29:59 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 20:52:35 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/14 20:54:39 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ int	main(int argc, char **argv, char **env)
 		exit(1);
 	pipex = malloc(sizeof(t_pipex));
 	if (pipex_init(pipex, argv) == 1)
+	{
+		perror("pipex init");
 		exit(1);
+	}
 	if (get_path(env, pipex) == 1)
 		exit(1);
 	if (get_pipe(pipex) == 1)

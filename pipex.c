@@ -6,11 +6,14 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/14 20:45:23 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/14 20:57:46 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Fix it: if infile does not exist, no erro */
+/* Fix it: error code */
+/* get_path add header */
+/* double check with norm */
+/* error catching */
 
 #include "pipex.h"
 
@@ -29,8 +32,10 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	if (!pipex->cmd2)
 		exit(1);
 	pipex->fd[0] = open(argv[1], O_RDONLY, S_IRWXU);
+	if (pipex->fd[0] == -1)
+		perror("infile open fail");
 	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT, S_IRWXU);
-	if (pipex->fd[0] == -1 || pipex->fd[1] == -1)
+	if (pipex->fd[1] == -1)
 		exit(1);
 	return (0);
 }
