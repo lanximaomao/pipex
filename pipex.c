@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/14 17:51:05 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/14 20:45:23 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* Fix it: if infile does not exist, no erro */
 
 #include "pipex.h"
 
