@@ -6,15 +6,15 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:29:59 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 17:38:32 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/14 17:51:26 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char** argv, char** env)
+int	main(int argc, char **argv, char **env)
 {
-	t_pipex *pipex;
+	t_pipex	*pipex;
 
 	if (argc != 5)
 		exit(1);
