@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/13 20:02:48 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/14 18:01:54 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 /*
-** allowed function: open, close, read, write, malloc, free, perror, strerror, access,
+** allowed function: open, close, read, write, malloc, free, perror, strerror,
+	access,
 ** dup, dup2, execve, exit, fork, pipe, unlink, wait, waitpid
 */
 
@@ -31,20 +31,20 @@
 
 #include "pipex.h"
 #include <errno.h>
-#include <unistd.h>
-#include <string.h>
 #include <fcntl.h>
+#include <string.h>
 #include <sys/wait.h>
+#include <unistd.h>
 
-void find_my_path ()
+void	find_my_path(void)
 {
-	return;
+	return ;
 }
 
-void get_cmd(char ** cmd_wth_arg)
+void	get_cmd(char **cmd_wth_arg)
 {
-	char *cmd_path;
-	int fd;
+	char	*cmd_path;
+	int		fd;
 
 	cmd_path = ft_strjoin("/bin/", cmd_wth_arg[0]);
 	fd = open("infile", O_RDWR);
@@ -53,11 +53,15 @@ void get_cmd(char ** cmd_wth_arg)
 	close(fd);
 }
 
-void ft_ls()
+void	ft_ls(void)
 {
-	char cmd[] = "/bin/ls";
-	char *argVec[] = {"ls", "-l", NULL};
-	char *envVec[] = {NULL};
+	char	cmd[];
+	char	*argVec[];
+	char	*envVec[];
+
+	cmd[] = "/bin/ls";
+	argVec[] = {"ls", "-l", NULL};
+	envVec[] = {NULL};
 	if (execve(cmd, argVec, envVec) == -1)
 	{
 		perror("execve");
@@ -77,27 +81,22 @@ void ft_ls()
 //	}
 //}
 
-
-
-
-int main(int argc, char** argv)
+int	main(int argc, char **argv)
 {
-	char* outfile;
-	char* infile;
-	int i;
-	int count;
-	char **input;
-	char **cmd_with_arg;
+	char	*outfile;
+	char	*infile;
+	int		i;
+	int		count;
+	char	**input;
+	char	**cmd_with_arg;
 
 	count = argc - 3;
 	outfile = ft_strdup(argv[argc - 1]);
 	infile = ft_strdup(argv[1]);
-	input = (char**)malloc(sizeof(char*)*(count+1));
-
+	input = (char **)malloc(sizeof(char *) * (count + 1));
 	//ft_printf("count number is %d\n", count);
 	//ft_printf("outfile %s\n", outfile);
 	//ft_printf("infile %s\n", infile);
-
 	i = 0;
 	while (i + 2 < argc - 1)
 	{
