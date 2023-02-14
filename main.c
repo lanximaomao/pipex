@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:29:59 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 17:30:07 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/14 17:38:32 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ int main(int argc, char** argv, char** env)
 	pipex = malloc(sizeof(t_pipex));
 	if (pipex_init(pipex, argv) == 1)
 		exit(1);
-	get_path(env, pipex);
+	if (get_path(env, pipex) == 1)
+		exit(1);
 	if (get_pipe(pipex) == 1)
 		exit(1);
 	free_all(pipex);

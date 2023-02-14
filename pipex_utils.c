@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:27:46 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 17:31:17 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/14 17:48:58 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ char** get_env (char** env)
 		else
 			i++;
 	}
-	path = ft_substr(env[i], 4, ft_strlen(env[i]));//free?
-	path_env = ft_split(path, ':'); // free_char?
+	path = ft_substr(env[i], 4, ft_strlen(env[i]));
+	path_env = ft_split(path, ':');
+	free(path);
 	return(path_env);
 }
 
-void get_path(char **env, t_pipex *pipex)
+int get_path(char **env, t_pipex *pipex)
 {
 	int i;
 	char **path_env;
@@ -40,19 +41,27 @@ void get_path(char **env, t_pipex *pipex)
 	path_env = get_env(env);
 	while (path_env[i])
 	{
-		pipex->cmd1_path = ft_strjoin(path_env[i], pipex->cmd1); // free
+		pipex->cmd1_path = ft_strjoin(path_env[i], pipex->cmd1);
+		if (!pipex->cmd1_path)
+			return(1);
 		if (access(pipex->cmd1_path, X_OK) == 0)
 			break;
+		free(pipex->cmd1_path);
 		i++;
 	}
 	i = 0;
 	while (path_env[i])
 	{
-		pipex->cmd2_path = ft_strjoin(path_env[i], pipex->cmd2); // free
+		pipex->cmd2_path = ft_strjoin(path_env[i], pipex->cmd2);
+		if (!pipex->cmd2_path)
+			return(1);
 		if (access(pipex->cmd2_path, X_OK) == 0)
 			break;
+		free(pipex->cmd2_path);
 		i++;
 	}
+	free_char(path_env);
+	return(0);
 }
 
 void free_char(char** str)
@@ -68,9 +77,12 @@ void free_char(char** str)
 	free(str);
 }
 
-
 void free_all(t_pipex *pipex)
 {
+	free(pipex->cmd1);
+	free(pipex->cmd2);
+	free(pipex->cmd1_path);
+	free(pipex->cmd2_path);
 	free_char(pipex->cmd1_args);
 	free_char(pipex->cmd2_args);
 	free(pipex);
