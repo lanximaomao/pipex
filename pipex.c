@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/14 17:08:05 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/14 17:12:07 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ int get_pipe (t_pipex *pipex)
 	int fd[2];
 	int pid1;
 	int pid2;
-	char *cmd_path;
 
 	if (pipe(fd) == -1)
 	{
@@ -117,16 +116,10 @@ int get_pipe (t_pipex *pipex)
 	}
 	else if (pid1 == 0) //children process for cmd1
 	{
-		cmd_path = ft_strjoin("/bin/", pipex->cmd1);
-		if (!cmd_path)
-		{
-			ft_printf("cannot join this string.\n");
-			return (1);
-		}
 		dup2(pipex->fd[0], 0);//read from infile
 		dup2(fd[1], 1);
 		close_all(pipex, fd[0], fd[1]);
-		if (execve(cmd_path, pipex->cmd1_args, NULL) == -1)
+		if (execve(pipex->cmd1_path, pipex->cmd1_args, NULL) == -1)
 		{
 			perror("execve cmd1");
 			exit(errno);
@@ -137,13 +130,10 @@ int get_pipe (t_pipex *pipex)
 		return(1);
 	else if (pid2 == 0) //children process for cmd2
 	{
-		cmd_path = ft_strjoin("/usr/bin/", pipex->cmd2);
-		if (!cmd_path)
-			return(1);
 		dup2(fd[0], 0);
 		dup2(pipex->fd[1],1);
 		close_all(pipex, fd[0], fd[1]);
-		if (execve(cmd_path, pipex->cmd2_args, NULL) == -1)
+		if (execve(pipex->cmd2_path, pipex->cmd2_args, NULL) == -1)
 		{
 			perror("execve cmd2");
 			exit(errno);
@@ -223,8 +213,8 @@ void get_path(char **env, t_pipex *pipex)
 			break;
 		i++;
 	}
-	ft_printf("my cmd1 path is %s\n", pipex->cmd1_path);
-	ft_printf("my cmd2 path is %s\n", pipex->cmd2_path);
+	//ft_printf("my cmd1 path is %s\n", pipex->cmd1_path);
+	//ft_printf("my cmd2 path is %s\n", pipex->cmd2_path);
 
 }
 
