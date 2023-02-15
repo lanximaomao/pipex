@@ -1,0 +1,10 @@
+
+
+./pipex infile "ls -l" "wc -l" outfile  --> outfile is 14, which is coorect
+
+./pipex infile "lls -l" "grep 15" outfile --> outfile is empty, which is correct
+
+./pipex infile "lls -l" "wc -l" outfile --> outfile is 1, which is wrong
+
+ ./pipex infile "" "wc -l" outfile
+ 

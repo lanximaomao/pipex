@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/15 14:02:44 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/15 17:18:31 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 int	pipex_init(t_pipex *pipex, char **argv)
 {
+	//./pipex infile "" "wc -l" outfile //fix this!
 	pipex->cmd1_args = ft_split(argv[2], ' ');
 	if (!pipex->cmd1_args)
 		exit(1);
