@@ -6,7 +6,7 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/16 00:30:01 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/16 00:44:25 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	return (0);
 }
 
-int	pipe_child1(t_pipex *pipex, int fd0, int fd1)
+void	pipe_child1(t_pipex *pipex, int fd0, int fd1)
 {
 	if (!pipex->cmd1_path)
 		exit(1);
@@ -55,11 +55,12 @@ int	pipe_child1(t_pipex *pipex, int fd0, int fd1)
 		perror("Cannot execute the first command");
 		exit (1);
 	}
-	return (0);
 }
 
-int	pipe_child2(t_pipex *pipex, int fd0, int fd1)
+void	pipe_child2(t_pipex *pipex, int fd0, int fd1)
 {
+	if (!pipex->cmd2_path)
+		exit(1);
 	dup2(fd0, 0);
 	dup2(pipex->fd[1], 1);
 	close_all(pipex, fd0, fd1);
@@ -68,7 +69,6 @@ int	pipe_child2(t_pipex *pipex, int fd0, int fd1)
 		perror("Cannot execute the second command");
 		exit(1);
 	}
-	return (0);
 }
 
 int	get_pipe(t_pipex *pipex)
@@ -78,10 +78,16 @@ int	get_pipe(t_pipex *pipex)
 	int	pid2;
 
 	if (pipe(fd) == -1)
+	{
+		perror("pipe");
 		return (1);
+	}
 	pid1 = fork();
 	if (pid1 == -1)
+	{
+		perror("fork");
 		return (1);
+	}
 	else if (pid1 == 0)
 		pipe_child1(pipex, fd[0], fd[1]);
 	pid2 = fork();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:01:44 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/15 12:37:41 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 00:37:11 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void		free_all(t_pipex *pipex);
 int			close_all(t_pipex *pipex, int fd1, int fd2);
 
 int			pipex_init(t_pipex *pipex, char **argv);
-int			pipe_child1(t_pipex *pipex, int fd0, int fd1);
-int			pipe_child2(t_pipex *pipex, int fd0, int fd1);
+void		pipe_child1(t_pipex *pipex, int fd0, int fd1);
+void		pipe_child2(t_pipex *pipex, int fd0, int fd1);
 int			get_pipe(t_pipex *pipex);
 
 #endif
