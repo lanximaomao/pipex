@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/15 17:18:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 00:30:01 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 int	pipex_init(t_pipex *pipex, char **argv)
 {
-	//./pipex infile "" "wc -l" outfile //fix this!
 	pipex->cmd1_args = ft_split(argv[2], ' ');
 	if (!pipex->cmd1_args)
 		exit(1);
@@ -46,13 +45,15 @@ int	pipex_init(t_pipex *pipex, char **argv)
 
 int	pipe_child1(t_pipex *pipex, int fd0, int fd1)
 {
+	if (!pipex->cmd1_path)
+		exit(1);
 	dup2(pipex->fd[0], 0);
 	dup2(fd1, 1);
 	close_all(pipex, fd0, fd1);
 	if (execve(pipex->cmd1_path, pipex->cmd1_args, NULL) == -1)
 	{
 		perror("Cannot execute the first command");
-		return (1);
+		exit (1);
 	}
 	return (0);
 }
@@ -65,7 +66,7 @@ int	pipe_child2(t_pipex *pipex, int fd0, int fd1)
 	if (execve(pipex->cmd2_path, pipex->cmd2_args, NULL) == -1)
 	{
 		perror("Cannot execute the second command");
-		return(1);
+		exit(1);
 	}
 	return (0);
 }
