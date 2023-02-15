@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/14 20:57:46 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/15 09:54:25 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,13 @@ int	pipex_init(t_pipex *pipex, char **argv)
 		exit(1);
 	pipex->fd[0] = open(argv[1], O_RDONLY, S_IRWXU);
 	if (pipex->fd[0] == -1)
-		perror("infile open fail");
-	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT, S_IRWXU);
+		perror("Fail to open infile");
+	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
 	if (pipex->fd[1] == -1)
+	{
+		perror("Fail to create or open outfile");
 		exit(1);
+	}
 	return (0);
 }
 

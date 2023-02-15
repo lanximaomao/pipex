@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:01:44 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/14 18:01:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/15 09:49:28 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_pipex
 
 char		**get_env(char **env);
 int			get_path(char **env, t_pipex *pipex);
+int			get_path_cmd1(char **path_env, t_pipex *pipex);
+int			get_path_cmd2(char **path_env, t_pipex *pipex);
 void		free_char(char **str);
 void		free_all(t_pipex *pipex);
 int			close_all(t_pipex *pipex, int fd1, int fd2);
