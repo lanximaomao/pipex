@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/15 12:56:12 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/15 14:02:44 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	pipe_child2(t_pipex *pipex, int fd0, int fd1)
 	close_all(pipex, fd0, fd1);
 	if (execve(pipex->cmd2_path, pipex->cmd2_args, NULL) == -1)
 	{
-		perror("Cannot execute the first command");
+		perror("Cannot execute the second command");
 		return(1);
 	}
 	return (0);
@@ -74,7 +74,6 @@ int	get_pipe(t_pipex *pipex)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
-	int ret;
 
 	if (pipe(fd) == -1)
 		return (1);
@@ -82,7 +81,7 @@ int	get_pipe(t_pipex *pipex)
 	if (pid1 == -1)
 		return (1);
 	else if (pid1 == 0)
-		ret = pipe_child1(pipex, fd[0], fd[1]);
+		pipe_child1(pipex, fd[0], fd[1]);
 	pid2 = fork();
 	if (pid2 == -1)
 		return (1);
