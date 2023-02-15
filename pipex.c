@@ -6,12 +6,10 @@
 /*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/16 00:44:25 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/16 00:45:35 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Fix it: error code */
-/* get_path add header */
 /* double check with norm */
 /* error catching */
 
