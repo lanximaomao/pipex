@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 11:01:43 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/15 11:02:40 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/15 12:31:37 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	get_path(char **env, t_pipex *pipex)
 	if (!path_env)
 		return (1);
 	if (get_path_cmd1(path_env, pipex) == 1)
-		return (2);
+		return (1);
 	if (get_path_cmd2(path_env, pipex) == 1)
-		return (3);
+		return (1);
 	free_char(path_env);
 	return (0);
 }

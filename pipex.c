@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/15 09:54:25 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/15 12:56:12 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	return (0);
 }
 
-int	pipe_child(t_pipex *pipex, int fd0, int fd1)
+int	pipe_child1(t_pipex *pipex, int fd0, int fd1)
 {
 	dup2(pipex->fd[0], 0);
 	dup2(fd1, 1);
 	close_all(pipex, fd0, fd1);
 	if (execve(pipex->cmd1_path, pipex->cmd1_args, NULL) == -1)
 	{
-		perror("execve cmd1");
-		exit(errno);
+		perror("Cannot execute the first command");
+		return (1);
 	}
 	return (0);
 }
 
-int	pipe_parent(t_pipex *pipex, int fd0, int fd1)
+int	pipe_child2(t_pipex *pipex, int fd0, int fd1)
 {
 	dup2(fd0, 0);
 	dup2(pipex->fd[1], 1);
 	close_all(pipex, fd0, fd1);
 	if (execve(pipex->cmd2_path, pipex->cmd2_args, NULL) == -1)
 	{
-		perror("execve cmd2");
-		exit(errno);
+		perror("Cannot execute the first command");
+		return(1);
 	}
 	return (0);
 }
@@ -74,6 +74,7 @@ int	get_pipe(t_pipex *pipex)
 	int	fd[2];
 	int	pid1;
 	int	pid2;
+	int ret;
 
 	if (pipe(fd) == -1)
 		return (1);
@@ -81,12 +82,12 @@ int	get_pipe(t_pipex *pipex)
 	if (pid1 == -1)
 		return (1);
 	else if (pid1 == 0)
-		pipe_child(pipex, fd[0], fd[1]);
+		ret = pipe_child1(pipex, fd[0], fd[1]);
 	pid2 = fork();
 	if (pid2 == -1)
 		return (1);
 	else if (pid2 == 0)
-		pipe_parent(pipex, fd[0], fd[1]);
+		pipe_child2(pipex, fd[0], fd[1]);
 	wait(NULL);
 	close_all(pipex, fd[0], fd[1]);
 	return (0);
