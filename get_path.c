@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 11:01:43 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/16 16:06:55 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 18:27:45 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ char	**get_env(char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (env[i][0] == 'P' && env[i][1] == 'A' && env[i][2] == 'T'
-			&& env[i][3] == 'H')
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
 			break ;
 		else
 			i++;
@@ -50,6 +49,7 @@ char	**get_env(char **env)
 	path_env = ft_split(path, ':');
 	if (!path_env)
 		return (NULL);
+	ft_printf("path is %s\n", path);
 	free(path);
 	return (path_env);
 }

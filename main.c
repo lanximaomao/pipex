@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 17:29:59 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/16 14:56:02 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 18:15:08 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	main(int argc, char **argv, char **env)
 	if (!pipex)
 		exit(EXIT_FAILURE);
 	pipex->env = env;
-	if (pipex_init(pipex, argv) == 1)
-		exit(EXIT_FAILURE);
+	pipex_init(pipex, argv);
 	if (get_path(pipex) == 1)
 		exit(EXIT_FAILURE);
 	if (get_pipe(pipex) == 1)

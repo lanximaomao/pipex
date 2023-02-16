@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/16 17:43:11 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 18:17:17 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	if (pipex->fd[0] == -1)
 	{
 		perror("Fail to open infile");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	return (0);
 }
