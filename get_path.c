@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 11:01:43 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/16 15:02:31 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 16:06:55 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**get_env(char **env)
 		else
 			i++;
 	}
-	path = ft_substr(env[i], 4, ft_strlen(env[i]));
+	path = ft_substr(env[i], 5, ft_strlen(env[i]));
 	if (!path)
 		return (NULL);
 	path_env = ft_split(path, ':');
