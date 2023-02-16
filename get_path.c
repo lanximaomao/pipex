@@ -6,19 +6,19 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 11:01:43 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/15 12:31:37 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 15:02:31 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	get_path(char **env, t_pipex *pipex)
+int	get_path(t_pipex *pipex)
 {
 	int		i;
 	char	**path_env;
 
 	i = 0;
-	path_env = get_env(env);
+	path_env = get_env(pipex->env);
 	if (!path_env)
 		return (1);
 	if (get_path_cmd1(path_env, pipex) == 1)
