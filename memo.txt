@@ -1,0 +1,10 @@
+Note:
+
+1. make sure there is an error msg if there are not enough arguments.
+2. outfile should be created anyway, whether comand is valid or not.
+3. if infile does not exisit, programme should return an erro and no commands should be executed.
+4. if commands are not valide, the error msg should be printed out.
+5. ./pipex infile "grep 8" "grep 0" outfile
+
+
+test cases:
