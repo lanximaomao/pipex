@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/13 10:01:44 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/16 14:56:11 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 23:06:56 by linlinsun        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int			pipex_init(t_pipex *pipex, char **argv);
 void		pipe_cmd1(t_pipex *pipex, int fd0, int fd1);
 void		pipe_cmd2(t_pipex *pipex, int fd0, int fd1);
 int			get_pipe(t_pipex *pipex);
+void		error(char *msg, int error_code);
 
 #endif
