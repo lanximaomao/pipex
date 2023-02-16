@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 11:01:43 by lsun              #+#    #+#             */
-/*   Updated: 2023/02/16 18:27:45 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/16 19:14:37 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**get_env(char **env)
 	path_env = ft_split(path, ':');
 	if (!path_env)
 		return (NULL);
-	ft_printf("path is %s\n", path);
 	free(path);
 	return (path_env);
 }
