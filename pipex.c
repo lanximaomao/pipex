@@ -6,7 +6,7 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/20 11:07:09 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/20 15:09:12 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@
 
 int	pipex_init(t_pipex *pipex, char **argv)
 {
+	pipex->fd[0] = open(argv[1], O_RDONLY);
+	if (pipex->fd[0] == -1)
+		perror("Fail to open infile");
+	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
+	if (pipex->fd[1] == -1)
+		perror("Fail to create or open outfile");
 	pipex->cmd1_args = ft_split(argv[2], ' ');
 	if (!pipex->cmd1_args)
 		exit(1);
@@ -30,12 +36,6 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	pipex->cmd2 = ft_strjoin("/", pipex->cmd2_args[0]);
 	if (!pipex->cmd2)
 		exit(1);
-	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-	if (pipex->fd[1] == -1)
-		perror("Fail to create or open outfile");
-	pipex->fd[0] = open(argv[1], O_RDONLY);
-	if (pipex->fd[0] == -1)
-		perror("Fail to open infile");
 	return (0);
 }
 
