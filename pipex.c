@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: linlinsun <linlinsun@student.42.fr>        +#+  +:+       +#+        */
+/*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/16 23:09:21 by linlinsun        ###   ########.fr       */
+/*   Updated: 2023/02/20 11:07:09 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ int	pipex_init(t_pipex *pipex, char **argv)
 	if (!pipex->cmd2)
 		exit(1);
 	pipex->fd[1] = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, S_IRWXU);
-	pipex->fd[0] = open(argv[1], O_RDONLY);
 	if (pipex->fd[1] == -1)
 		perror("Fail to create or open outfile");
+	pipex->fd[0] = open(argv[1], O_RDONLY);
 	if (pipex->fd[0] == -1)
 		perror("Fail to open infile");
 	return (0);
@@ -41,30 +41,30 @@ int	pipex_init(t_pipex *pipex, char **argv)
 
 void	pipe_cmd1(t_pipex *pipex, int fd0, int fd1)
 {
-	dup2(pipex->fd[0], 0);
-	dup2(fd1, 1);
-	close_all(pipex, fd0, fd1);
 	if (pipex->fd[0] == -1)
 		exit(1);
-	if (execve(pipex->cmd1_path, pipex->cmd1_args, pipex->env) == -1)
+	if (dup2(pipex->fd[0], 0) == -1 || dup2(fd1, 1) == -1)
 	{
-		perror("Cannot execute the first command");
-		exit(1);
+		close_all(pipex, fd0, fd1);
+		return ;
 	}
+	close_all(pipex, fd0, fd1);
+	if (execve(pipex->cmd1_path, pipex->cmd1_args, pipex->env) == -1)
+		error("Cannot execute the first command", 1);
 }
 
 void	pipe_cmd2(t_pipex *pipex, int fd0, int fd1)
 {
-	dup2(fd0, 0);
-	dup2(pipex->fd[1], 1);
-	close_all(pipex, fd0, fd1);
 	if (pipex->fd[1] == -1)
 		exit(1);
-	if (execve(pipex->cmd2_path, pipex->cmd2_args, pipex->env) == -1)
+	if (dup2(fd0, 0) == -1 || dup2(pipex->fd[1], 1) == -1)
 	{
-		perror("Cannot execute the second command");
-		exit(1);
+		close_all(pipex, fd0, fd1);
+		return ;
 	}
+	close_all(pipex, fd0, fd1);
+	if (execve(pipex->cmd2_path, pipex->cmd2_args, pipex->env) == -1)
+		error("Cannot execute the second command", 1);
 }
 
 int	get_pipe(t_pipex *pipex)
