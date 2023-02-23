@@ -6,13 +6,15 @@
 /*   By: lsun <lsun@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/11 15:06:27 by linlinsun         #+#    #+#             */
-/*   Updated: 2023/02/20 15:09:12 by lsun             ###   ########.fr       */
+/*   Updated: 2023/02/23 16:20:44 by lsun             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* close all open fd before wait or waitpid*/
-/* double check with norm */
-/* error catching */
+/* should I wait only for the last children processer? */
+/*
+** ./pipex "/dev/urandom" "cat" "head -1" outfile --> why this would work even
+** when i am waiting for both children process to finish?
+*/
 
 #include "pipex.h"
 
