@@ -38,5 +38,3 @@ To compare the result with the equivalent Bash command, use the following format
 
 *External Testers:*
 - [pipex_tester by vfurmane](https://github.com/vfurmane/pipex-tester)
-
-Feel free to customize the formatting or add any additional information as needed.
