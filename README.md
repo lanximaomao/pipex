@@ -2,7 +2,7 @@
 
 ## Description
 
-Pipex mimics the behavior of the pipe (|) in Bash, allowing the output of one command to be used as input for the next command.
+Pipex mimics the behavior of the pipe (|) in Bash, allowing the output of one command to be used as input for the next command. Detailed project requirements can be found [here](Pipex.pdf).
 
 ## Language Used
 
